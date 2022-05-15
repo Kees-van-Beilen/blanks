@@ -38,13 +38,18 @@ export const map = {
     },
     // client in
     "sync":{
-        "room":VariableType.
+        "room":VariableType.UInt16,
+        "state":VariableType.UInt8,
+        "scores":VariableType.ArrayUInt8,
+        "users":VariableType.ArrayString,
+        "electus":VariableType.UInt8
     },
     "userJoined":{
         "user":VariableType.String,
     },
     "answerRevealed":{
-        "answerId":VariableType.UInt8
+        "answerId":VariableType.UInt8,
+        "content":VariableType.String
     },
     "startChoosing":{
         // electus is choosing
