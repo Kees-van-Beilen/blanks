@@ -1,0 +1,5 @@
+#effe niet aan de local nanopack repo komen
+nanoPack/*
+#elk file die gebuild moet worden includen we niet
+api/dist/*
+dist/*
