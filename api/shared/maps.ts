@@ -1,6 +1,6 @@
 import {VariableType} from "https://deno.inpolen.nl/NanoPack/mod.ts"
 
-export const map = {
+export const eventMap = {
     "ping":{
         
     },
@@ -53,13 +53,12 @@ export const map = {
     },
     "startChoosing":{
         // electus is choosing
+        "cardOrder":VariableType.ArrayUInt8//de volgorde van de kaarten
     },
     "endChoosing":{
-        "picked":VariableType.UInt8
-    },
-    "scoreScreen":{
+        "picked":VariableType.UInt8,
         "users":VariableType.ArrayString,
-        "scores":VariableType.ArrayUInt8
+        "scores":VariableType.ArrayUInt8,
+        "electus":VariableType.UInt8
     }
-    
 }
