@@ -3,3 +3,5 @@ nanoPack/*
 #elk file die gebuild moet worden includen we niet
 api/dist/*
 dist/*
+#Ignore vscode files
+.vscode/*
