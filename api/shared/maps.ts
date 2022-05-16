@@ -1,5 +1,6 @@
 import {VariableType} from "https://deno.inpolen.nl/NanoPack/mod.ts"
-
+import {BlanksGameState} from "./state.ts"
+export type T = typeof eventMap;
 export const eventMap = {
     "ping":{
         
@@ -42,7 +43,12 @@ export const eventMap = {
         "state":VariableType.UInt8,
         "scores":VariableType.ArrayUInt8,
         "users":VariableType.ArrayString,
-        "electus":VariableType.UInt8
+        "electus":VariableType.UInt8,
+        "cardOrder":VariableType.ArrayUInt8,
+        "revealedCard":VariableType.ArrayUInt8,
+        "revealedCardContent":VariableType.ArrayString,
+        "picked":VariableType.UInt8,
+        "sentence":VariableType.String
     },
     "userJoined":{
         "user":VariableType.String,
@@ -60,5 +66,21 @@ export const eventMap = {
         "users":VariableType.ArrayString,
         "scores":VariableType.ArrayUInt8,
         "electus":VariableType.UInt8
+    },
+    "roundStarted":{
+        "sentence":VariableType.String,
     }
+}
+
+export interface EventRoomSync {
+    "room":number,
+    "state":BlanksGameState,
+    "scores":number[],
+    "users":string[],
+    "electus":number,
+    "cardOrder":number[],
+    "revealedCard":number[],
+    "revealedCardContent":string[],
+    "picked":number,
+    "sentence":string
 }
