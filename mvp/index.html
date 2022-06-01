@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blanks | MVP</title>
+    <link href="./main.css" rel="stylesheet">
+    <script type="module" src="./app.js"></script>
+</head>
+<body>
+    <p id="currentRoomCode"></p>
+    <p id="currentPlayerName"></p>
+    <p id="currentState"></p>
+    <div screen="main">
+        <button id="makeRoom">maak kamer</button>
+        <button id="joinRoom">join kamer</button>
+    </div>
+    <div screen="make">
+        <form id="makeRoomForm">
+            <label for="makeRoomPlayerName">name:</label>
+            <input type="text" id="makeRoomPlayerName">
+            <button type="submit">maak</button>
+        </form>
+    </div>
+    <div screen="join">
+        <form id="joinRoomForm">
+            <label for="joinRoomPlayerName">name:</label>
+            <input type="text" id="joinRoomPlayerName">
+            <label for="joinRoomCode">code:</label>
+            <input type="text" id="joinRoomCode">
+            <button type="submit">join</button>
+        </form>
+    </div>
+
+</body>
+</html>

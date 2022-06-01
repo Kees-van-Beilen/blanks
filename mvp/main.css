@@ -1,0 +1,6 @@
+*[screen]{
+    display: block;
+}
+*[hidden="true"]{
+    display: none;
+}

@@ -1,9 +1,9 @@
 // deno-lint-ignore-file
-import {NestedObject, NPServer,VariableType} from "https://deno.inpolen.nl/NanoPack/server/mod.ts";
+import {NestedObject, NPServer,VariableType,ClientRequest} from "https://deno.inpolen.nl/NanoPack/server/mod.ts";
 import {eventMap} from "../shared/maps.ts";
 
-let games: NestedObject[];
-let clients: NestedObject[];
+let games: NestedObject[] = [];
+let clients: NestedObject[] = [];
 
 function getRandomInt(min = 1, max = 1) : number{
 	min = Math.ceil(1000);
@@ -11,17 +11,18 @@ function getRandomInt(min = 1, max = 1) : number{
 	return Math.floor(Math.random() * (max - min + 1)) + min; 
 }
 
-const server = new NPServer();
+const server = new NPServer("localhost",5569);
 server.addStructFromMap(eventMap);
 
 server.on("error",(client:any,o:any)=>{
     console.log('%c ' + o.message, 'color:red;');
 });
 
-server.on("createRoom", (client:any,o:any)=>{
-    console.log('%c ' + o.message, 'color:blue;');
+server.on("createRoom", (client:ClientRequest,o:any)=>{
+    console.log('%c ' + JSON.stringify(o), 'color:blue;');
     const code = getRandomInt();
     const user = o.user;
+
     games[code] = {
         room: code,
         state: 1,
@@ -31,10 +32,12 @@ server.on("createRoom", (client:any,o:any)=>{
         cardOrder: [],
         revealedCard: [],
         revealedCardContent: [],
-        answers: [],
+        // answers: [],
         picked: 0,
-        lastInteraction: Date.now()
+        sentence:"",
+        // lastInteraction: Date.now()
     }
+
     
     let newGameClients = {0: client};
     clients[code] = newGameClients;

@@ -1,8 +1,10 @@
 ///De client is een bundle dus alles waar de client bij moet komen wordt geexport in mod.ts
-import {NPClient} from "https://deno.inpolen.nl/NanoPack/client/mod.ts"
+// import {NPClient} from "https://deno.inpolen.nl/NanoPack/client/mod.ts"
+import {NPClient} from "../../nanoPack/client/mod.ts"
 import {eventMap,T,EventRoomSync} from "../shared/maps.ts"
 import {BlanksGameState,BlanksAPIEventStateChange,User,Card,BlanksAPIEvent,BlanksAPIEventMap} from "./types.ts"
 
+export {BlanksGameState}
 
 
 export class BlanksAPI{
@@ -63,12 +65,22 @@ export class BlanksAPI{
     public constructor(url:string){
         this.connection = new NPClient(url);
         this.connection.addStructFromMap(eventMap);
-        this.connection.on<T>("sync",((game:EventRoomSync)=>{
+        this.connection.on<T>("error",((msg)=>{
+            console.error(msg);
+        }))
+        this.connection.on<T>("userJoined",((o)=>{
+            this._users.push(o.user as string)
+
             const previous = this._state;
-            this._state = game.state
             for(const a of this.gameStateChangeCallbacks){
                 a(this._state,previous);
             }
+        }))
+        this.connection.on<T>("sync",((game:EventRoomSync)=>{
+            // console.log("stateChange")
+            // console.log(game)
+            const previous = this._state;
+            this._state = game.state
             this._users                  = game.users;
             this._electus                = game.electus;
             this._room                   = game.room;
@@ -77,6 +89,9 @@ export class BlanksAPI{
             this._revealedCards          = game.revealedCard;
             this._revealedCardContent    = game.revealedCardContent;
             this._scores                 = game.scores;
+            for(const a of this.gameStateChangeCallbacks){
+                a(this._state,previous);
+            }
         }) as (value:unknown)=>void)
     }
 
