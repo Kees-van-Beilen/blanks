@@ -11,7 +11,7 @@ function getRandomInt(min = 1, max = 1) : number{
 	return Math.floor(Math.random() * (max - min + 1)) + min; 
 }
 
-const server = new NPServer("localhost",5569);
+const server = new NPServer("localhost",8080);
 server.addStructFromMap(eventMap);
 
 server.on("error",(client:any,o:any)=>{
