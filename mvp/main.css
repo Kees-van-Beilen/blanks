@@ -2,5 +2,23 @@
     display: block;
 }
 *[hidden="true"]{
-    display: none;
+    display: none !important;
+}
+
+button{
+    display: block;
+}
+
+#debuginfo{
+    border: black 2px solid;
+    width: calc(100% - 10px);
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#cardsCardsHolder div{
+    border: black 2px solid;
+    margin: 12px;
 }

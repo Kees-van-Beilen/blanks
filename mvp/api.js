@@ -631,6 +631,7 @@ class BlanksAPI {
     connection;
     gameStateChangeCallbacks = [];
     _state = BlanksGameState.notConnected;
+    sentence = "";
     get state() {
         return this._state;
     }
@@ -652,11 +653,11 @@ class BlanksAPI {
     get cards() {
         let arr = [];
         for (const i of this._cardOrder){
-            const cIndex = this._revealedCards.indexOf(i);
+            this._revealedCards.indexOf(i);
             arr.push({
                 "id": i,
                 "revealed": this._revealedCards.includes(i),
-                "content": cIndex === -1 ? "" : this._revealedCardContent[cIndex]
+                "content": this._revealedCardContent[i]
             });
         }
         return arr;
@@ -690,6 +691,7 @@ class BlanksAPI {
         });
         this.connection.on("userJoined", (o)=>{
             this._users.push(o.user);
+            this._scores.push(0);
             const previous = this._state;
             for (const a of this.gameStateChangeCallbacks){
                 a(this._state, previous);
@@ -706,6 +708,7 @@ class BlanksAPI {
             this._revealedCards = game.revealedCard;
             this._revealedCardContent = game.revealedCardContent;
             this._scores = game.scores;
+            this.sentence = game.sentence;
             for (const a of this.gameStateChangeCallbacks){
                 a(this._state, previous);
             }
@@ -721,6 +724,12 @@ class BlanksAPI {
         this._thisUser = user;
         this.connection.send("joinRoom", {
             "user": user,
+            "room": room
+        });
+    }
+    startGame() {
+        const room = this._room;
+        this.connection.send("startRound", {
             "room": room
         });
     }

@@ -9,13 +9,21 @@
     <script type="module" src="./app.js"></script>
 </head>
 <body>
-    <p id="currentRoomCode"></p>
-    <p id="currentPlayerName"></p>
-    <p id="currentState"></p>
+    <div id="debuginfo">
+        <p>current room code: <span id="currentRoomCode"></span></p></p>
+        <p>current player name: <span id="currentPlayerName"></span></p></p>
+        <p>current game state: <span id="currentState"></span></p></p>
+    </div>
+    
     <div screen="main">
         <button id="makeRoom">maak kamer</button>
         <button id="joinRoom">join kamer</button>
     </div>
+
+    <div screen="wait">
+        <p>Wachten.....</p>
+    </div>
+
     <div screen="make">
         <form id="makeRoomForm">
             <label for="makeRoomPlayerName">name:</label>
@@ -32,6 +40,42 @@
             <button type="submit">join</button>
         </form>
     </div>
+
+    <div screen="scoreboard">
+        <p id="scoreboardRoomCode"></p>
+        <div id="scoreboardUsers">
+            <!-- <p> <strong> username </strong>(electus) (score)</p> -->
+        </div>
+        <!-- Display button alleen als de huidige speler de electus is -->
+        <button id="scoreboardStart">
+            start de game
+        </button>
+    </div>
+
+    <div screen="fillInTheBlank">
+        <p>Vul in de blank:</p>
+        <p><b><span id="fitbZin"></span></b></p>
+        <form id="fitbForm">
+            <input type="text" id="fitbA">
+            <button type="submit">geef op</button>
+        </form>
+    </div>
+
+    <div screen="electusWaiting">
+        <p>Wachten tot iedereen een antwoord heeft</p>
+    </div>
+
+    <div screen="cards">
+        <!-- De electus kan de kaarten revealen door er op te klikken -->
+        <h1>Kies de grappigste zin: <span id="cardsZin"></span></h1>
+        <div id="cardsCardsHolder"></div>
+        <!-- <div class="card">
+            <div class="front"></div>
+            <div class="back"></div>
+        </div> -->
+    </div>
+
+
 
 </body>
 </html>

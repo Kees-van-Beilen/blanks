@@ -1,4 +1,4 @@
-// import {BlanksGameState } from "./api.js"
+import {BlanksGameState } from "./api.js"
 
 
 
@@ -11,8 +11,9 @@ const currentState = document.getElementById("currentState");
  */
 export function stateChange(api){
     api.on("stateChange", (state) => {
-        currentRoomCode.innerHTML = state.roomCode;
-        currentPlayerName.innerHTML = state.playerName;
-        currentState.innerHTML = state.state;
+        console.log(api)
+        currentRoomCode.innerHTML = api.room;
+        currentPlayerName.innerHTML = api._thisUser;
+        currentState.innerHTML = BlanksGameState[state];
     });
 }

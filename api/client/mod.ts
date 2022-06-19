@@ -1,5 +1,8 @@
 ///De client is een bundle dus alles waar de client bij moet komen wordt geexport in mod.ts
 // import {NPClient} from "https://deno.inpolen.nl/NanoPack/client/mod.ts"
+
+
+
 import {NPClient} from "../../nanoPack/client/mod.ts"
 import {eventMap,T,EventRoomSync} from "../shared/maps.ts"
 import {BlanksGameState,BlanksAPIEventStateChange,User,Card,BlanksAPIEvent,BlanksAPIEventMap} from "./types.ts"
@@ -12,6 +15,7 @@ export class BlanksAPI{
     private readonly connection:NPClient;
     private gameStateChangeCallbacks: BlanksAPIEventStateChange[] = [];
     private _state:BlanksGameState = BlanksGameState.notConnected 
+    public sentence:string = "";
     public get state(){return this._state}
     public get room(){return this._room}
     public get users():User[]{
@@ -33,7 +37,7 @@ export class BlanksAPI{
             arr.push({
                 "id":i,
                 "revealed":this._revealedCards.includes(i),
-                "content":(cIndex===-1)?"":this._revealedCardContent[cIndex]
+                "content":this._revealedCardContent[i]
             })
         }
         return arr;
@@ -70,7 +74,7 @@ export class BlanksAPI{
         }))
         this.connection.on<T>("userJoined",((o)=>{
             this._users.push(o.user as string)
-
+            this._scores.push(0);
             const previous = this._state;
             for(const a of this.gameStateChangeCallbacks){
                 a(this._state,previous);
@@ -89,7 +93,8 @@ export class BlanksAPI{
             this._revealedCards          = game.revealedCard;
             this._revealedCardContent    = game.revealedCardContent;
             this._scores                 = game.scores;
-            for(const a of this.gameStateChangeCallbacks){
+            this.sentence                = game.sentence
+             for(const a of this.gameStateChangeCallbacks){
                 a(this._state,previous);
             }
         }) as (value:unknown)=>void)
@@ -108,6 +113,13 @@ export class BlanksAPI{
         this._thisUser = user;
         this.connection.send<T>("joinRoom",{
             "user":user,
+            "room":room
+        })
+    }
+
+    public startGame(){
+        const room = this._room;
+        this.connection.send<T>("startRound",{
             "room":room
         })
     }
